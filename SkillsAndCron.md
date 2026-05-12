@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [tools/skills_tool.py](../tools/skills_tool.py)
@@ -29,24 +29,24 @@ Together they allow Hermes to accumulate long-lived domain knowledge (skills) an
 
 ```mermaid
 graph TD
-    A[SKILL.md files\n~/.hermes/skills/] --> B[skills_tool.py\nskills_list / skill_view]
-    B --> C[skill_commands.py\nslash command injection]
-    C --> D[AIAgent\nrun_conversation]
-    E[Hub Sources\nGitHub / ClawHub / official] --> F[skills_hub.py\nfetch + quarantine]
-    F --> G[skills_guard.py\nsecurity scan]
+    A[SKILL.md files<br/>~/.hermes/skills/] --> B[skills_tool.py<br/>skills_list / skill_view]
+    B --> C[skill_commands.py<br/>slash command injection]
+    C --> D[AIAgent<br/>run_conversation]
+    E[Hub Sources<br/>GitHub / ClawHub / official] --> F[skills_hub.py<br/>fetch + quarantine]
+    F --> G[skills_guard.py<br/>security scan]
     G --> A
-    H[skill_manager_tool.py\nskill_manage] --> A
-    A --> I[skill_usage.py\n.usage.json telemetry]
-    I --> J[curator.py\nauto transitions]
-    J --> K[Aux Agent\nreview + consolidate]
+    H[skill_manager_tool.py<br/>skill_manage] --> A
+    A --> I[skill_usage.py<br/>.usage.json telemetry]
+    I --> J[curator.py<br/>auto transitions]
+    J --> K[Aux Agent<br/>review + consolidate]
     K --> H
 
-    L[jobs.json\n~/.hermes/cron/] --> M[cron/scheduler.py\ntick + run_job]
+    L[jobs.json<br/>~/.hermes/cron/] --> M[cron/scheduler.py<br/>tick + run_job]
     M --> D
-    M --> N[_run_job_script\nno_agent watchdogs]
-    M --> O[_deliver_result\nplatform delivery]
-    P[cronjob_tools.py\ncronjob tool] --> L
-    Q[hermes_cli/cron.py\nhermes cron CLI] --> L
+    M --> N[_run_job_script<br/>no_agent watchdogs]
+    M --> O[_deliver_result<br/>platform delivery]
+    P[cronjob_tools.py<br/>cronjob tool] --> L
+    Q[hermes_cli/cron.py<br/>hermes cron CLI] --> L
 ```
 
 ---
@@ -147,20 +147,20 @@ The curator is an inactivity-triggered background process that maintains agent-c
 
 ```mermaid
 graph TD
-    A[Skill Created\nby agent via skill_manage] --> B[active]
-    B -->|unused > stale_after_days\ndefault 30d| C[stale]
+    A[Skill Created<br/>by agent via skill_manage] --> B[active]
+    B -->|unused > stale_after_days<br/>default 30d| C[stale]
     C -->|re-used| B
-    C -->|unused > archive_after_days\ndefault 90d| D[archived\nskills/.archive/]
+    C -->|unused > archive_after_days<br/>default 90d| D[archived<br/>skills/.archive/]
     D -->|hermes curator restore| B
-    B -->|pinned=true| E[pinned\nexempt from all transitions]
+    B -->|pinned=true| E[pinned<br/>exempt from all transitions]
     C -->|pinned=true| E
 
-    F[curator.should_run_now\nevery interval_hours] --> G[apply_automatic_transitions\npure function]
+    F[curator.should_run_now<br/>every interval_hours] --> G[apply_automatic_transitions<br/>pure function]
     G --> B
     G --> C
     G --> D
-    F --> H[Spawn Aux Agent\nreview prompt]
-    H --> I[skill_manage\npatch / archive / consolidate]
+    F --> H[Spawn Aux Agent<br/>review prompt]
+    H --> I[skill_manage<br/>patch / archive / consolidate]
 ```
 
 ### Curator Triggers
@@ -249,7 +249,7 @@ sequenceDiagram
                 S->>S: _parse_wake_gate(output)
             end
             S->>S: _build_job_prompt(job, prerun_script)
-            Note over S: loads skills via skill_view,\nbumps usage, scans for injection
+            Note over S: loads skills via skill_view,<br/>bumps usage, scans for injection
             S->>Agent: AIAgent.chat(prompt)
             Agent-->>S: final_response
             S->>JDB: save_job_output(job_id, doc)

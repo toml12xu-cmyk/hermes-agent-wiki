@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [cli.py](../cli.py)

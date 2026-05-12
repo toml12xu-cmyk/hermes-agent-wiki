@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [tools/registry.py](../tools/registry.py)
@@ -35,18 +35,18 @@ The design emphasizes **zero circular imports**, **runtime availability gating**
 
 ```mermaid
 graph TD
-    A[model_tools.py] --> B[tools/registry.py\nToolRegistry singleton]
+    A[model_tools.py] --> B[tools/registry.py<br/>ToolRegistry singleton]
     B --> C[discover_builtin_tools]
     C --> D[AST scan tools/*.py]
     D --> E[importlib.import_module]
-    E --> F[tools/*.py\nregistry.register at import]
+    E --> F[tools/*.py<br/>registry.register at import]
 
-    F --> G[ToolEntry\nname · toolset · schema\nhandler · check_fn]
+    F --> G[ToolEntry<br/>name · toolset · schema<br/>handler · check_fn]
 
-    B --> H[get_definitions\nOpenAI-format schemas]
-    B --> I[dispatch\nroutes to handler]
+    B --> H[get_definitions<br/>OpenAI-format schemas]
+    B --> I[dispatch<br/>routes to handler]
 
-    H --> J[check_fn TTL cache\n30 s window]
+    H --> J[check_fn TTL cache<br/>30 s window]
     J --> K{available?}
     K -- yes --> L[include in schema]
     K -- no --> M[omit silently]
@@ -55,8 +55,8 @@ graph TD
     N --> O[actual tool function]
 
     subgraph Toolsets
-        P[toolsets.py\n_HERMES_CORE_TOOLS]
-        Q[platform adapters\nchoose a toolset]
+        P[toolsets.py<br/>_HERMES_CORE_TOOLS]
+        Q[platform adapters<br/>choose a toolset]
     end
 
     A --> P
@@ -123,11 +123,11 @@ sequenceDiagram
     M->>D: discover_builtin_tools()
     D->>D: glob tools/*.py
     loop each candidate .py
-        D->>D: ast.parse() — check for\ntop-level registry.register()
+        D->>D: ast.parse() — check for<br/>top-level registry.register()
         alt has registry.register call
             D->>F: importlib.import_module("tools.X")
-            F->>R: registry.register(name, toolset,\nschema, handler, check_fn)
-            R->>R: store ToolEntry\nbump _generation
+            F->>R: registry.register(name, toolset,<br/>schema, handler, check_fn)
+            R->>R: store ToolEntry<br/>bump _generation
         end
     end
     D-->>M: list of imported module names
@@ -141,8 +141,8 @@ This flow runs for every tool call during an agent conversation turn.
 
 ```mermaid
 sequenceDiagram
-    participant A as run_agent.py\nagent loop
-    participant MT as model_tools.py\nhandle_function_call()
+    participant A as run_agent.py<br/>agent loop
+    participant MT as model_tools.py<br/>handle_function_call()
     participant R as ToolRegistry
     participant T as Tool Handler
 
@@ -160,7 +160,7 @@ sequenceDiagram
     else unknown tool
         R-->>MT: {"error": "Unknown tool: X"}
     end
-    MT-->>A: result string appended\nto messages
+    MT-->>A: result string appended<br/>to messages
 ```
 
 Sources: [tools/registry.py:590](../tools/registry.py#L590), [model_tools.py](../model_tools.py)
@@ -171,7 +171,7 @@ Before sending tool schemas to the model, `get_definitions()` filters out unavai
 
 ```mermaid
 graph TD
-    A[get_definitions\ntool_names set] --> B[for each requested name]
+    A[get_definitions<br/>tool_names set] --> B[for each requested name]
     B --> C{entry exists?}
     C -- no --> D[skip]
     C -- yes --> E{has check_fn?}
@@ -186,7 +186,7 @@ graph TD
     J --> H
     K --> D
     H --> L[apply dynamic_schema_overrides]
-    L --> M[wrap as\ntype:function schema]
+    L --> M[wrap as<br/>type:function schema]
 ```
 
 Sources: [tools/registry.py:121](../tools/registry.py#L121), [tools/registry.py:540](../tools/registry.py#L540)

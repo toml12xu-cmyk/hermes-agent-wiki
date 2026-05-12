@@ -87,9 +87,9 @@ graph TD
     DASH_USER([Browser / Dashboard])
 
     subgraph Surfaces["Interaction Surfaces"]
-        CLI["CLI\ncli.py · HermesCLI\nprompt_toolkit REPL"]
-        TUI["TUI\nui-tui/ · Ink/React\nJSON-RPC over stdio"]
-        DASH["Web Dashboard\nhermes_cli/web_server.py\nFastAPI + xterm.js"]
+        CLI["CLI<br/>cli.py · HermesCLI<br/>prompt_toolkit REPL"]
+        TUI["TUI<br/>ui-tui/ · Ink/React<br/>JSON-RPC over stdio"]
+        DASH["Web Dashboard<br/>hermes_cli/web_server.py<br/>FastAPI + xterm.js"]
     end
 
     CLI_USER --> CLI
@@ -98,11 +98,11 @@ graph TD
     DASH --> TUI
 
     subgraph Gateway["Gateway (gateway/)"]
-        GW_RUN["GatewayRunner\ngateway/run.py"]
-        GW_PLAT["Platform Adapters\nTelegram · Discord · Slack\nWhatsApp · Matrix · Email\nSMS · DingTalk · 10+ more"]
-        GW_SESS["SessionStore\ngateway/session.py"]
-        GW_STREAM["StreamConsumer\ngateway/stream_consumer.py"]
-        GW_HOOKS["HookRegistry\ngateway/hooks.py"]
+        GW_RUN["GatewayRunner<br/>gateway/run.py"]
+        GW_PLAT["Platform Adapters<br/>Telegram · Discord · Slack<br/>WhatsApp · Matrix · Email<br/>SMS · DingTalk · 10+ more"]
+        GW_SESS["SessionStore<br/>gateway/session.py"]
+        GW_STREAM["StreamConsumer<br/>gateway/stream_consumer.py"]
+        GW_HOOKS["HookRegistry<br/>gateway/hooks.py"]
         GW_RUN --> GW_PLAT
         GW_RUN --> GW_SESS
         GW_RUN --> GW_STREAM
@@ -112,7 +112,7 @@ graph TD
     GW_USER --> GW_PLAT
 
     subgraph CoreAgent["Core Agent (run_agent.py)"]
-        AI["AIAgent\nconversation loop\nprovider routing"]
+        AI["AIAgent<br/>conversation loop<br/>provider routing"]
         IB["IterationBudget"]
         CC["ContextCompressor"]
         AI --> IB
@@ -120,40 +120,40 @@ graph TD
     end
 
     subgraph AgentInternals["Agent Internals (agent/)"]
-        PB["prompt_builder\nsystem prompt assembly"]
-        PC["prompt_caching\nAnthropic cache markers"]
-        MM["memory_manager\nmemory providers"]
-        AUX["auxiliary_client\nside-LLM calls"]
-        ADAP["Provider Adapters\nAnthropic · Gemini\nBedrock · Codex"]
-        DISP["display\nKawaiiSpinner · diffs"]
+        PB["prompt_builder<br/>system prompt assembly"]
+        PC["prompt_caching<br/>Anthropic cache markers"]
+        MM["memory_manager<br/>memory providers"]
+        AUX["auxiliary_client<br/>side-LLM calls"]
+        ADAP["Provider Adapters<br/>Anthropic · Gemini<br/>Bedrock · Codex"]
+        DISP["display<br/>KawaiiSpinner · diffs"]
     end
 
     subgraph ToolsComp["Tools (tools/)"]
-        REG["ToolRegistry\ntools/registry.py"]
-        MT["model_tools.py\nhandle_function_call"]
-        TOOLS["Built-in Tools\nterminal · file · web\nbrowser · code · delegate\nmemory · MCP · TTS · …"]
+        REG["ToolRegistry<br/>tools/registry.py"]
+        MT["model_tools.py<br/>handle_function_call"]
+        TOOLS["Built-in Tools<br/>terminal · file · web<br/>browser · code · delegate<br/>memory · MCP · TTS · …"]
         REG --> TOOLS
         MT --> REG
     end
 
     subgraph PluginsComp["Plugins (plugins/ + providers/)"]
-        PM["PluginManager\nhermes_cli/plugins.py"]
-        MEM_P["Memory Providers\nhoncho · mem0 · supermemory · …"]
-        MOD_P["Model Providers\nopenrouter · anthropic\ngemini · bedrock · xai · …"]
-        IMG_P["Image Gen Providers\nFAL.ai · OpenAI · xAI"]
+        PM["PluginManager<br/>hermes_cli/plugins.py"]
+        MEM_P["Memory Providers<br/>honcho · mem0 · supermemory · …"]
+        MOD_P["Model Providers<br/>openrouter · anthropic<br/>gemini · bedrock · xai · …"]
+        IMG_P["Image Gen Providers<br/>FAL.ai · OpenAI · xAI"]
         CTX_E["Context Engines"]
     end
 
     subgraph SkillsCron["Skills & Cron"]
-        SKILLS["Skills\n~/.hermes/skills/\nSKILL.md files"]
-        CRON["Cron Scheduler\ncron/scheduler.py"]
-        CURATOR["Curator\nagent/curator.py"]
+        SKILLS["Skills<br/>~/.hermes/skills/<br/>SKILL.md files"]
+        CRON["Cron Scheduler<br/>cron/scheduler.py"]
+        CURATOR["Curator<br/>agent/curator.py"]
     end
 
     subgraph AIArt["AI Artifacts (.github/agents/)"]
-        WIKI_MAIN["code-wiki-main\nOrchestrator"]
-        WIKI_WORK["code-wiki-worker\nComponent Writer"]
-        WIKI_REFL["code-wiki-reflector\nValidator & Assembler"]
+        WIKI_MAIN["code-wiki-main<br/>Orchestrator"]
+        WIKI_WORK["code-wiki-worker<br/>Component Writer"]
+        WIKI_REFL["code-wiki-reflector<br/>Validator & Assembler"]
         WIKI_MAIN --> WIKI_WORK
         WIKI_MAIN --> WIKI_REFL
     end

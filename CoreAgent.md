@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [run_agent.py](../run_agent.py)
@@ -39,7 +39,7 @@ graph TD
     RL --> AIAgent
 
     subgraph CoreAgent["CoreAgent (run_agent.py)"]
-        AIAgent["AIAgent\n__init__ / run_conversation / chat"]
+        AIAgent["AIAgent<br/>__init__ / run_conversation / chat"]
         IB[IterationBudget]
         SP[SystemPromptBuilder]
         CC[ContextCompressor]
@@ -48,13 +48,13 @@ graph TD
         AIAgent --> CC
     end
 
-    AIAgent --> MT[model_tools.py\nhandle_function_call]
-    AIAgent --> TS[toolsets.py\nresolve_toolset]
-    AIAgent --> SD[hermes_state.py\nSessionDB]
-    MT --> REG[tools/registry.py\nRegistry]
+    AIAgent --> MT[model_tools.py<br/>handle_function_call]
+    AIAgent --> TS[toolsets.py<br/>resolve_toolset]
+    AIAgent --> SD[hermes_state.py<br/>SessionDB]
+    MT --> REG[tools/registry.py<br/>Registry]
     REG --> TOOLS[tools/*.py]
 
-    SD --> SQLITE[(state.db\nSQLite WAL)]
+    SD --> SQLITE[(state.db<br/>SQLite WAL)]
 ```
 
 Sources: [run_agent.py:1](../run_agent.py#L1), [model_tools.py:1](../model_tools.py#L1), [hermes_state.py:1](../hermes_state.py#L1)
@@ -118,21 +118,21 @@ The diagram below traces one user turn from `run_conversation()` to final respon
 ```mermaid
 graph TD
     START([User calls run_conversation])
-    SANITIZE[Sanitize surrogates\nin user_message]
-    HYDRATE[Hydrate todo store\nand nudge counters\nfrom history]
-    SYSPROMPT{Cached system\nprompt?}
-    BUILDSYS[Build system prompt\nfrom memory + skills\n+ context files]
-    LOADSYS[Load stored prompt\nfrom SessionDB]
-    LOOP{Budget remaining\nAND not interrupted?}
-    APICALL[Call provider API\nchat_completions /\nanthropicmessages /\ncodex_responses /\nbedrock_converse]
-    TOOLCALLS{Response has\ntool_calls?}
-    PARALLEL{Batch safe to\nparallelize?}
-    PARALLELRUN[Run tools concurrently\nin ThreadPoolExecutor]
+    SANITIZE[Sanitize surrogates<br/>in user_message]
+    HYDRATE[Hydrate todo store<br/>and nudge counters<br/>from history]
+    SYSPROMPT{Cached system<br/>prompt?}
+    BUILDSYS[Build system prompt<br/>from memory + skills<br/>+ context files]
+    LOADSYS[Load stored prompt<br/>from SessionDB]
+    LOOP{Budget remaining<br/>AND not interrupted?}
+    APICALL[Call provider API<br/>chat_completions /<br/>anthropicmessages /<br/>codex_responses /<br/>bedrock_converse]
+    TOOLCALLS{Response has<br/>tool_calls?}
+    PARALLEL{Batch safe to<br/>parallelize?}
+    PARALLELRUN[Run tools concurrently<br/>in ThreadPoolExecutor]
     SEQRUN[Run tools sequentially]
-    APPENDRESULTS[Append tool results\nto messages]
-    COMPRESS{Context too large\n near limit?}
-    DOCOMPRESS[ContextCompressor:\ncompress middle turns]
-    FINAL[Return final_response\n+ messages dict]
+    APPENDRESULTS[Append tool results<br/>to messages]
+    COMPRESS{Context too large<br/> near limit?}
+    DOCOMPRESS[ContextCompressor:<br/>compress middle turns]
+    FINAL[Return final_response<br/>+ messages dict]
 
     START --> SANITIZE
     SANITIZE --> HYDRATE
@@ -192,11 +192,11 @@ When the model returns multiple tool calls in a single response, `_should_parall
 graph TD
     BATCH[Incoming tool_calls batch]
     SINGLE{Single call?}
-    NEVER{Any tool in\n_NEVER_PARALLEL_TOOLS\nclarify?}
-    PATHCHECK{All tools in\n_PARALLEL_SAFE_TOOLS\nor _PATH_SCOPED_TOOLS?}
-    OVERLAP{Path-scoped tools\noverlap on disk?}
+    NEVER{Any tool in<br/>_NEVER_PARALLEL_TOOLS<br/>clarify?}
+    PATHCHECK{All tools in<br/>_PARALLEL_SAFE_TOOLS<br/>or _PATH_SCOPED_TOOLS?}
+    OVERLAP{Path-scoped tools<br/>overlap on disk?}
     SEQ([Sequential execution])
-    PAR([Parallel ThreadPoolExecutor\nmax 8 workers])
+    PAR([Parallel ThreadPoolExecutor<br/>max 8 workers])
 
     BATCH --> SINGLE
     SINGLE -- Yes --> SEQ

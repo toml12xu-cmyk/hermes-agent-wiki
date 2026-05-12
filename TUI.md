@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [ui-tui/src/app.tsx](../ui-tui/src/app.tsx)

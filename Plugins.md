@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [hermes_cli/plugins.py](../hermes_cli/plugins.py)

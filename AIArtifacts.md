@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [.github/agents/code_wiki_main.agent.md](../.github/agents/code_wiki_main.agent.md)
@@ -42,14 +42,14 @@ The diagram below shows how the three agents communicate. The main orchestrator 
 ```mermaid
 graph TD
     User([Developer / IDE])
-    Main["code-wiki-main\n(Orchestrator)"]
-    Analysis["wiki/analysis/\nrepository-analysis.json"]
-    Plan["wiki/tasks/\norchestration-plan.json"]
-    Worker["code-wiki-worker\n(Component Writer)"]
-    Reflector["code-wiki-reflector\n(Validator & Assembler)"]
-    CompDocs["wiki/ComponentName.md\n(×N)"]
+    Main["code-wiki-main<br/>(Orchestrator)"]
+    Analysis["wiki/analysis/<br/>repository-analysis.json"]
+    Plan["wiki/tasks/<br/>orchestration-plan.json"]
+    Worker["code-wiki-worker<br/>(Component Writer)"]
+    Reflector["code-wiki-reflector<br/>(Validator & Assembler)"]
+    CompDocs["wiki/ComponentName.md<br/>(×N)"]
     Arch["wiki/Architecture.md"]
-    Config["wiki/config/config.json\n(Exclusions & AI paths)"]
+    Config["wiki/config/config.json<br/>(Exclusions & AI paths)"]
 
     User -->|"triggers"| Main
     Config -->|"file_filters + included_ai_paths"| Main
@@ -77,11 +77,11 @@ The main agent executes a strict 6-step workflow and never produces documentatio
 
 ```mermaid
 graph TD
-    S1["Step 1: Analyze Repo\n(if analysis missing)"]
+    S1["Step 1: Analyze Repo<br/>(if analysis missing)"]
     S2["Step 2: Build Orchestration Plan"]
     S3["Step 3: Ask User to Confirm"]
-    S4["Step 4: Generate Component Docs\n(delegate to worker ×N)"]
-    S5["Step 5: Assemble Final Docs\n(delegate to reflector)"]
+    S4["Step 4: Generate Component Docs<br/>(delegate to worker ×N)"]
+    S5["Step 5: Assemble Final Docs<br/>(delegate to reflector)"]
     S6["Step 6: Report Status"]
     Stop([End])
 

@@ -1,4 +1,4 @@
-<details>
+﻿<details>
 <summary>Relevant source files</summary>
 
 - [agent/prompt_builder.py](../agent/prompt_builder.py)
@@ -34,26 +34,26 @@ This package is not a public API boundary; `run_agent.py` and `cli.py` call into
 
 ```mermaid
 graph TD
-    A[run_agent.py\nAIAgent] --> B[prompt_builder\nSystem prompt assembly]
-    A --> C[prompt_caching\nAnthropiccache markers]
-    A --> D[context_compressor\nContextEngine impl]
-    A --> E[memory_manager\nMemoryManager]
-    A --> F[credential_pool\nPooledCredential]
-    A --> G[display\nKawaiiSpinner]
-    A --> H[auxiliary_client\ncall_llm]
-    A --> I[skill_commands\nSkill slash cmds]
-    A --> J[curator\nBackground review]
-    A --> K[retry_utils\njittered_backoff]
+    A[run_agent.py<br/>AIAgent] --> B[prompt_builder<br/>System prompt assembly]
+    A --> C[prompt_caching<br/>Anthropiccache markers]
+    A --> D[context_compressor<br/>ContextEngine impl]
+    A --> E[memory_manager<br/>MemoryManager]
+    A --> F[credential_pool<br/>PooledCredential]
+    A --> G[display<br/>KawaiiSpinner]
+    A --> H[auxiliary_client<br/>call_llm]
+    A --> I[skill_commands<br/>Skill slash cmds]
+    A --> J[curator<br/>Background review]
+    A --> K[retry_utils<br/>jittered_backoff]
 
-    E --> L[memory_provider\nMemoryProvider ABC]
-    D --> M[context_engine\nContextEngine ABC]
+    E --> L[memory_provider<br/>MemoryProvider ABC]
+    D --> M[context_engine<br/>ContextEngine ABC]
     D --> H
-    H --> N[anthropic_adapter\nMessages API]
-    H --> O[gemini_native_adapter\nNative Gemini REST]
-    H --> P[bedrock_adapter\nConverse API]
-    H --> Q[codex_responses_adapter\nResponses API]
-    H --> R[model_metadata\nContext lengths]
-    G --> S[image_gen_provider\nImageGenProvider ABC]
+    H --> N[anthropic_adapter<br/>Messages API]
+    H --> O[gemini_native_adapter<br/>Native Gemini REST]
+    H --> P[bedrock_adapter<br/>Converse API]
+    H --> Q[codex_responses_adapter<br/>Responses API]
+    H --> R[model_metadata<br/>Context lengths]
+    G --> S[image_gen_provider<br/>ImageGenProvider ABC]
 ```
 
 ---
@@ -103,13 +103,13 @@ Every conversation turn, `AIAgent._build_system_prompt()` assembles the prompt b
 
 ```mermaid
 graph TD
-    A[AIAgent._build_system_prompt] --> B[DEFAULT_AGENT_IDENTITY\nagent/prompt_builder.py:136]
-    A --> C[build_environment_hints\nagent/prompt_builder.py:736]
-    A --> D[build_context_files_prompt\nagent/prompt_builder.py:1417]
-    A --> E[build_skills_system_prompt\nagent/prompt_builder.py:988]
-    A --> F[MemoryManager.build_system_prompt\nagent/memory_manager.py:274]
-    A --> G[PLATFORM_HINTS dict\nagent/prompt_builder.py:~380]
-    D --> H{Scan each file\n_scan_context_content}
+    A[AIAgent._build_system_prompt] --> B[DEFAULT_AGENT_IDENTITY<br/>agent/prompt_builder.py:136]
+    A --> C[build_environment_hints<br/>agent/prompt_builder.py:736]
+    A --> D[build_context_files_prompt<br/>agent/prompt_builder.py:1417]
+    A --> E[build_skills_system_prompt<br/>agent/prompt_builder.py:988]
+    A --> F[MemoryManager.build_system_prompt<br/>agent/memory_manager.py:274]
+    A --> G[PLATFORM_HINTS dict<br/>agent/prompt_builder.py:~380]
+    D --> H{Scan each file<br/>_scan_context_content}
     H -->|clean| I[Inject into prompt]
     H -->|injection detected| J[BLOCKED placeholder]
 ```
@@ -126,13 +126,13 @@ When token usage exceeds the `threshold_percent` (default 75%) of the model's co
 
 ```mermaid
 graph TD
-    A[should_compress\nreturns True] --> B[Prune old tool outputs\n_summarize_tool_result per tool]
-    B --> C[Prune old image parts\n_strip_image_parts_from_parts]
-    C --> D[Build summarizer input\nhead + tail protection]
-    D --> E[call_llm\nauxiliary client]
-    E --> F[Structured summary\nResolved / Active Task / Pending]
-    F --> G[SUMMARY_PREFIX prepended\nagent/context_compressor.py:43]
-    G --> H[Replace middle turns\nwith summary message]
+    A[should_compress<br/>returns True] --> B[Prune old tool outputs<br/>_summarize_tool_result per tool]
+    B --> C[Prune old image parts<br/>_strip_image_parts_from_parts]
+    C --> D[Build summarizer input<br/>head + tail protection]
+    D --> E[call_llm<br/>auxiliary client]
+    E --> F[Structured summary<br/>Resolved / Active Task / Pending]
+    F --> G[SUMMARY_PREFIX prepended<br/>agent/context_compressor.py:43]
+    G --> H[Replace middle turns<br/>with summary message]
     H --> I[Update compression_count]
 ```
 
@@ -150,20 +150,20 @@ Sources: [agent/context_compressor.py:43-60](../agent/context_compressor.py#L43-
 
 ```mermaid
 graph TD
-    A[call_llm\nagent/auxiliary_client.py:4067] --> B{task override\nin config.yaml?}
-    B -->|yes| C[Use configured\nprovider + model]
+    A[call_llm<br/>agent/auxiliary_client.py:4067] --> B{task override<br/>in config.yaml?}
+    B -->|yes| C[Use configured<br/>provider + model]
     B -->|no / auto| D[_resolve_auto]
     D --> E[1. User's main provider]
     E --> F{available?}
-    F -->|no| G[2. OpenRouter\nOPENROUTER_API_KEY]
+    F -->|no| G[2. OpenRouter<br/>OPENROUTER_API_KEY]
     G --> H{available?}
-    H -->|no| I[3. Nous Portal\n~/.hermes/auth.json]
+    H -->|no| I[3. Nous Portal<br/>~/.hermes/auth.json]
     I --> J{available?}
-    J -->|no| K[4. Custom endpoint\nconfig.yaml base_url]
+    J -->|no| K[4. Custom endpoint<br/>config.yaml base_url]
     K --> L{available?}
     L -->|no| M[5. Native Anthropic]
     M --> N{available?}
-    N -->|no| O[6. Direct providers\nZAI / Kimi / MiniMax]
+    N -->|no| O[6. Direct providers<br/>ZAI / Kimi / MiniMax]
     O --> P{available?}
     P -->|no| Q[RuntimeError]
     F & H & J & L & N & P -->|yes| R[Make API call]
